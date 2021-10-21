@@ -28,5 +28,3 @@ class CosSim(object):
         # print('{}\n{}'.format(p_str1,p_str2))
         result = p_str1.dot(p_str2) / (np.sqrt(p_str1.dot(p_str1)) * np.sqrt(p_str2.dot(p_str2)))
         return round(result, 4)
-
-

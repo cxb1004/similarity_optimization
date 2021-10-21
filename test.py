@@ -3,7 +3,15 @@ from newSimilarity.textSimilarity import CosSim as newCosSim
 
 test_list = [
     ['多少钱', '你好，请问你们这个东西多少钱呢'],
-    ['多少钱', '我想买一个你们的产品，但是你们的价格有点高，你能告诉我最低多少钱吗？']
+    ['多少钱', '我想买一个你们的产品，但是你们的价格有点高，你能告诉我最低多少钱吗？'],
+    ['谢谢你','他妈的'],
+    ['谢谢你','你妈的'],
+    ['谢谢你','滚'],
+    ['谢谢你','草你妈'],
+    ['谢谢你','日你大爷'],
+    ['谢谢你','你妈逼'],
+    ['谢谢你','不要废话'],
+    ['谢谢你','你妹的']
 ]
 
 oldUtils = oldCosSim()
@@ -23,5 +31,5 @@ for group in test_list:
     print('   {}: {} -> {}'.format(compareFlag, oldValue, oldValue))
 
 
-# for group in test_list:
-
+sample = '我想买一个你们的产品，但是你们的价格有点高，你能告诉我最低多少钱吗？'
+newUtils.getKeywords_textRank(sample)

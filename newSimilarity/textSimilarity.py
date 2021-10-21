@@ -1,15 +1,28 @@
 from collections import Counter
-
 import jieba
 from jieba import analyse
-# import jieba.analyse.textrank
-# import jieba.analyse.tfidf
+import jieba.posseg
 import numpy as np
 
 
 class CosSim(object):
     # 默认取3个关键词用于比较
-    DEFAULT_kEYWORD_COUNT = 3
+    DEFAULT_kEYWORD_COUNT = 100
+
+    def __init__(self):
+        # 调整jieba输出日志
+        jieba.setLogLevel(jieba.logging.INFO)
+        try:
+            jieba.load_userdict(r'jieba_white_list.txt')
+        except Exception as ex:
+            print('没有找到白名单文件：jieba_white_list.txt')
+
+
+        try:
+            stopwords = [line.strip().decode('utf-8') for line in open('jieba_black_list.txt').readlines()
+        except Exception as ex:
+            print('没有找到白名单文件：jieba_white_list.txt')
+
 
     @staticmethod
     def getSimilarityIndex(input1, input2):
@@ -33,14 +46,16 @@ class CosSim(object):
         result = p_str1.dot(p_str2) / (np.sqrt(p_str1.dot(p_str1)) * np.sqrt(p_str2.dot(p_str2)))
         return round(result, 4)
 
-
-
     @staticmethod
     def getKeywords_textRank(input_str):
         # 使用TextRank算法来提取关键词
         # 这里不使用TF-IDF的原因是TF-IDF是需要有词频文件，即关键词在这个文本中高频，同时在其他文本中低频
+        word_tag = jieba.posseg.lcut(input_str)
+        for x in word_tag:
+            print('{}：{}'.format(x.word, x.flag))
+
         tool = analyse.textrank
-        kws = tool(input_str, topK=CosSim.DEFAULT_kEYWORD_COUNT, )
+        kws = tool(input_str, topK=CosSim.DEFAULT_kEYWORD_COUNT, withWeight=True, allowPOS=('ns', 'n', 'vn', 'v', 'm'))
+        print(kws)
 
         pass
-
