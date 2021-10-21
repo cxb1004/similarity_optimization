@@ -58,4 +58,6 @@ class CosSim(object):
         kws = tool(input_str, topK=CosSim.DEFAULT_kEYWORD_COUNT, withWeight=True, allowPOS=('ns', 'n', 'vn', 'v', 'm'))
         print(kws)
 
+
+
         pass
